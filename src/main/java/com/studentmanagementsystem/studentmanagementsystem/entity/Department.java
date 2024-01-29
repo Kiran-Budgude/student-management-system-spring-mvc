@@ -1,7 +1,8 @@
 package com.studentmanagementsystem.studentmanagementsystem.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Department {
@@ -12,6 +13,27 @@ public class Department {
 
     // Getters and setters
 
+    @OneToMany(mappedBy = "department")
+    private Set<Student> students = new HashSet<>();
+
+    @OneToMany(mappedBy = "department")
+    private Set<Semester> semesters = new HashSet<>();
+
+    public Set<Student> getStudents() {
+        return students;
+    }
+
+    public void setStudents(Set<Student> students) {
+        this.students = students;
+    }
+
+    public Set<Semester> getSemesters() {
+        return semesters;
+    }
+
+    public void setSemesters(Set<Semester> semesters) {
+        this.semesters = semesters;
+    }
 
     public Long getDepartmentId() {
         return departmentId;

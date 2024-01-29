@@ -172,14 +172,14 @@ public class StudentServiceImpl implements StudentService {
         return random.nextInt(maxDigits - minDigits + 1) + minDigits;
     }
 
-          @Override
-          public String saveImage(MultipartFile image) throws IOException {
-           // Save the image to a directory or external storage, and return the image name/path
-           // Example: Store the image in a directory within your project
-           String imageName = UUID.randomUUID().toString() + "_" + image.getOriginalFilename();
-           Files.write(Paths.get("Gallery", imageName), image.getBytes());
-           return imageName;
-       }
+    @Override
+    public String saveImage(MultipartFile image) throws IOException {
+        // Save the image to a directory or external storage, and return the image name/path
+        // Example: Store the image in a directory within your project
+        String imageName = UUID.randomUUID().toString() + "_" + image.getOriginalFilename();
+        Files.write(Paths.get("Gallery", imageName), image.getBytes());
+        return imageName;
+    }
 
     @Override
     public Page<Student> findPaginatedStudent(int pageNo, int pageSize) {

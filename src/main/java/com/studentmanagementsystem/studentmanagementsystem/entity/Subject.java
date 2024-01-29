@@ -1,9 +1,6 @@
 package com.studentmanagementsystem.studentmanagementsystem.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Subject {
@@ -13,8 +10,20 @@ public class Subject {
 
     private String subjectName;
 
+    @ManyToOne
+    @JoinColumn(name = "semester_id")
+    private Semester semester;
+
     // Getters and setters
 
+
+    public Semester getSemester() {
+        return semester;
+    }
+
+    public void setSemester(Semester semester) {
+        this.semester = semester;
+    }
 
     public Long getSubjectId() {
         return subjectId;
