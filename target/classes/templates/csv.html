@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download Students CSV</title>
+</head>
+<body>
+
+<h1>Download Students CSV</h1>
+
+<button id="downloadCsvButton">Download CSV</button>
+
+<script>
+        document.getElementById('downloadCsvButton').addEventListener('click', function() {
+            // Make a GET request to the CSV export endpoint
+            fetch('/export/students/csv')
+                .then(response => response.blob())
+                .then(blob => {
+                    // Create a Blob URL for the CSV file
+                    const url = window.URL.createObjectURL(new Blob([blob]));
+
+                    // Create a link element
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'students.csv'; // Set the filename for the download
+
+                    // Append the link to the body and click it to trigger the download
+                    document.body.appendChild(a);
+                    a.click();
+
+                    // Remove the link from the DOM
+                    document.body.removeChild(a);
+                });
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Management System</title>
+    <!-- Add your common stylesheets, scripts, or other head elements here -->
+</head>
+<body>
+<header>
+    <h1>Welcome to the Student Management System</h1>
+    <!-- Add any common header elements here -->
+</header>
+
+<nav>
+    <ul>
+        <li><a th:href="@{/students}" th:text="Students"></a></li>
+        <!-- Add other navigation links for different sections of your application -->
+    </ul>
+</nav>
+
+<section>
+    <!-- This section will be replaced by the content of specific pages -->
+    <div th:replace="content :: content"></div>
+</section>
+
+<footer>
+    <!-- Add common footer elements here -->
+</footer>
+</body>
+</html>

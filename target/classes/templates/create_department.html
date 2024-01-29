@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Student Management System - Add Department</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <!--Brand-->
+    <a class="navbar-brand" href="#">Student Management System</a>
+    <!--Navbar Links-->
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/departments}">Department List</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<div class="container">
+    <div class="row">
+        <h1>Add Department</h1>
+    </div>
+
+    <form th:action="@{/departments}"  th:object="${department}" method="POST">
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="departmentId">Department ID:</label>
+                <input type="text" class="form-control" id="departmentId" th:field="*{departmentId}" placeholder="Enter Department ID"/>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="departmentName">Department Name:</label>
+                <input type="text" class="form-control" id="departmentName" th:field="*{departmentName}" placeholder="Enter Department Name"/>
+            </div>
+
+        <!-- Add other input fields for department details -->
+        <br>
+        <div class="box-footer">
+            <button type="submit" class="btn btn-primary">Add Department</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>

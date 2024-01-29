@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Student Management System</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <style>
+        /* Custom styles for increasing table size */
+        .container {
+            max-width: 1200px; /* Set your desired maximum width for the container */
+        }
+
+        .table {
+            overflow-x: auto; /* Add horizontal scrollbar if needed */
+        }
+
+        h1 {
+            font-size: 28px; /* Adjust the font size as needed */
+        }
+
+        /* Style for horizontal buttons */
+        .horizontal-buttons .btn {
+            margin-right: 5px; /* Adjust the margin as needed */
+        }
+
+        /* Style to minimize font size for student details */
+        .student-details td {
+            font-size: 15px; /* Set your desired font size */
+        }
+
+        .table-blue th {
+            background-color: #800080;
+            color: white;
+            border: 1px solid #ddd;
+            border-bottom: 3px double #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .thumbnail {
+            max-width: 80px; /* Adjust the max-width as needed */
+            max-height: 80px; /* Adjust the max-height as needed */
+            width: auto;
+            height: auto;
+        }
+        /* Add this to your stylesheet or in a <style> tag in your HTML */
+.pagination {
+    display: flex;
+    align-items: center;
+}
+
+.pagination span, .pagination a {
+    margin-right: 5px;
+}
+
+.pagination span:last-child, .pagination a:last-child {
+    margin-right: 0;
+}
+
+
+
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <!--Brand-->
+    <a class="navbar-brand" href="#">Student Management System</a>
+    <!--Navbar Links-->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/students}">Students</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/subjects}">Subjects</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/faculty}">Faculty</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/departments}">Departments</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="collapse navbar-collapse" id="newnavbarSupportedContent">
+        <div class="ms-auto mb-3 mb-lg-0 ml-auto">
+            <a class="nav-link active" aria-current="page" th:href="@{/logout}">Logout</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="row">
+        <h1>Students Details</h1>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-3">
+            <a th:href="@{/students/new}" class="btn btn-info btn-sm mb-3">Add Student</a>
+            <a th:href="@{/csv}" class="btn btn-info btn-sm mb-3 ms-2">Download CSV</a>
+            <a th:href="@{/pdf}" class="btn btn-info btn-sm mb-3 ms-2">Download Pdf</a>
+        </div>
+
+        <!-- Search Form -->
+        <div class="row mb-3">
+            <form th:action="@{/students/search}" method="get" class="ml-auto">
+                <div class="input-group">
+                    <input type="text" class="form-control" name="searchInput" required>
+                    <div class="input-group-append">
+                        <button class="btn btn-sm btn-secondary" type="submit">Search</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <table class="table table-striped table-bordered student-details">
+            <thead class="table-blue">
+            <tr>
+                <th>Id</th>
+                <th>First Name</th>
+                <th>Middle Name</th>
+                <th>SurName</th>
+                <th>Contact Number</th>
+                <th>Email Id</th>
+                <th>Department</th>
+                <th>Date Of Birth</th>
+                <th>Address</th>
+                <th>Image</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="student : ${students}">
+                <td th:text="${student.id}"></td>
+                <td th:text="${student.firstName}"></td>
+                <td th:text="${student.middleName}"></td>
+                <td th:text="${student.lastName}"></td>
+                <td th:text="${student.phoneNumber}"></td>
+                <td th:text="${student.email}"></td>
+                <td th:text="${student.department}"></td>
+                <td th:text="${student.dateOfBirth}"></td>
+                <td th:text="${student.address}"></td>
+                <td>
+                    <img class="thumbnail" th:src="@{'data:image/jpg;base64,' + ${student.photos}}"
+                         alt="Student Image"/>
+                </td>
+                <td class="horizontal-buttons">
+                    <div class="btn-group">
+                        <a th:href="@{/students/edit/{id}(id=${student.id})}" class="btn btn-info btn-sm">Update</a>
+                        <a th:href="@{/students/{id}(id=${student.id})}" class="btn btn-danger btn-sm">Delete</a>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="pagination">
+            <span style="margin-right: 10px;">Total Rows = [[${totalItems}]]</span>
+            <span style="margin-right: 10px;">Page:</span>
+
+            <span th:each="i : ${#numbers.sequence(1, totalPages)}">
+        <a th:if="${currentPage != i}" th:href="@{'/page/' + ${i}}">[[${i}]]</a>
+        <span th:unless="${currentPage != i}">[[${i}]]</span>
+        <span th:unless="${i == totalPages}"> | </span>
+    </span>
+
+            <a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${currentPage + 1}}">Next</a>
+            <span th:unless="${currentPage < totalPages}">Next</span>
+
+            <a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${totalPages}}">Last</a>
+            <span th:unless="${currentPage < totalPages}">Last</span>
+        </div>
+
+
+    </div>
+
+    <div th:replace="footer :: footer"></div>
+</body>
+</html>

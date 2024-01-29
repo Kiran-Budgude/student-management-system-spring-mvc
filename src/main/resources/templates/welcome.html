@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome</title>
+    <style>
+        body {
+            background-image: url('/images/neon-welcome-neon-hd-wallpaper-preview.jpg');
+            background-size: cover;
+            background-position: center center;
+            background-attachment: fixed;
+            height: 100vh; /* Ensure full viewport height */
+            margin: 0; /* Remove default margin */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        h1 {
+            color: #ffffff; /* Set the text color */
+            text-align: center;
+            font-size: 36px; /* Adjust the font size */
+        }
+    </style>
+    <script>
+        // Redirect to student.html after a delay (e.g., 3000 milliseconds)
+        setTimeout(function() {
+            window.location.href = "/students";
+        }, 3000);
+    </script>
+</head>
+<body>
+<h1>Welcome to the Student Management System</h1>
+<!-- You can customize the content as needed -->
+</body>
+</html>
