@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Student Management System</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <style>
+        /* Custom styles for increasing table size */
+        .container {
+            max-width: 1200px; /* Set your desired maximum width for the container */
+        }
+
+        .table {
+            overflow-x: auto; /* Add horizontal scrollbar if needed */
+        }
+          h1 {
+            font-size: 28px; /* Adjust the font size as needed */
+        }
+
+        /* Style for horizontal buttons */
+        .horizontal-buttons .btn {
+            margin-right: 5px; /* Adjust the margin as needed */
+        }
+
+        /* Style to minimize font size for student details */
+        .department-details td {
+            font-size: 15px; /* Set your desired font size */
+        }
+         .table-3d {
+        border-collapse: separate;
+        border-spacing: 0;
+    }
+
+    .table-3d th {
+        background-color: blue;
+        color: white;
+        border: 1px solid #ddd; /* Regular border */
+        border-bottom: 3px double #ddd; /* 3D border effect */
+        padding: 8px;
+        text-align: left;
+    }
+
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <!--Brand-->
+    <a class="navbar-brand" href="#">Student Management System</a>
+    <!--Navbar Links-->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/students}">Students</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/subjects}">Subjects</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/semesters}">Semester</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/departments}">Departments</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="collapse navbar-collapse" id="newnavbarSupportedContent">
+        <div class="ms-auto mb-3 mb-lg-0 ml-auto">
+            <a class="nav-link active" aria-current="page" th:href="@{/logout}">Logout</a>
+        </div>
+    </div>
+</nav>
+<div class="container">
+    <div class="row">
+        <h1>Semesters Details </h1>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-3">
+            <a th:href="@{/semester/new}" class="btn btn-info btn-sm mb-3">Add Semester</a>
+        </div>
+
+        <table class="table table-striped table-bordered department-details">
+            <thead class="table-blue">
+            <tr>
+                <th style="background-color:#800080 ; color: white;">Semester_Id</th>
+                <th style="background-color:#800080; color: white;">Semester</th>
+                <th style="background-color:#800080; color: white;">Department_Id</th>
+                <th style="background-color:#800080; color: white;">Department_Name</th>
+                <th style="background-color:#800080; color: white;">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="semester : ${semesters}">
+                <td th:text="${semester.semesterId}"></td>
+                <td th:text="${semester.semesterNumber}"></td>
+                <td th:if="${semester != null and semester.department != null}" th:text="${semester.department.departmentId}"></td>
+                <td th:if="${semester != null and semester.department != null}" th:text="${semester.department.departmentName}"></td>
+                <!-- Handle the case when semester or department is null -->
+                <td th:unless="${semester != null and semester.department != null}">N/A</td>
+
+                <td class="horizontal-buttons">
+                    <div class="btn-group">
+                        <a th:href="@{/semesters/edit/{id}(id=${semester.semesterId})}" class="btn btn-info btn-sm">Update</a>
+                        <a th:href="@{/semesters/{id}(id=${semester.semesterId})}" class="btn btn-danger btn-sm">Delete</a>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div th:replace="footer :: footer"></div>
+</body>
+</html>
